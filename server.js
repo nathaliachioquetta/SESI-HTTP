@@ -27,16 +27,17 @@ app.get("/alunos", (req, res) => {
 });
 
 // GET - Consultar aluno pelo id
-app.get("/aluno/:id", (req, res) => {
-    const id = number(req.params.id);
+app.get("/alunos/:id", (req, res) => {
+    const id = Number(req.params.id);
 
-    const aluno = alunos.find(a=> id.id  === id);
+    const aluno = alunos.find(a=> a.id  === id);
 
     if(!aluno) {
         return res.status(404).json({
             mensagem: "Aluno não encontrado."
         });
     }
+    res.status(200).json(aluno);
 });
 
 //POST - Cadastrar aluno
@@ -105,4 +106,9 @@ app.delete("/aluno/:id", (req, res) => {
 
     alunos = alunos.filter(a => a.id !== id);
     res.status(204).send();
-})
+});
+
+// inciar servidor
+app.listen(PORT, () => {
+    console.log(`API executanto em http://localhost:${PORT}`);
+});
